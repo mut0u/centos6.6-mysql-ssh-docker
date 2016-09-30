@@ -5,14 +5,28 @@ RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-6 \
 	&& rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6 \
 	&& rpm --import https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY
 
-RUN rpm --rebuilddb
 
 
-RUN yum -y install openssh openssh-server openssh-clients wget
+RUN rpm --rebuilddb \
+	&& yum -y install \
+	https://centos6.iuscommunity.org/ius-release.rpm \
+	vim-minimal-7.4.629-5.el6 \
+	sudo-1.8.6p3-20.el6_7 \
+	openssh-5.3p1-112.el6_7 \
+	openssh-server-5.3p1-112.el6_7 \
+	openssh-clients-5.3p1-112.el6_7 \
+	python-setuptools-0.6.10-3.el6 \
+	vim-minimal \
+	sudo \
+	openssh \
+	openssh-server \
+	openssh-clients \
+	python-setuptools \
+	wget
 
 
+RUN rm -rf /var/cache/yum/* && yum clean all
 
-RUN yum -y install sudo python-setuptools yum-plugin-versionlock
 
 
 
@@ -24,7 +38,7 @@ RUN rpm -ivh mysql57-community-release-el6-7.noarch.rpm
 
 
 
- RUN yum -y install mysql-community-server.x86_64
+RUN yum -y install mysql-community-server.x86_64
 
 
 
