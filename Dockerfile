@@ -73,7 +73,8 @@ ENV SSH_USER_SHELL "/bin/bash"
 
 
 
-EXPOSE [22, 3306]
+EXPOSE 22
+EXPOSE 3306
 
 CMD ["/usr/bin/supervisord", "--configuration=/etc/supervisord.conf"]
 
