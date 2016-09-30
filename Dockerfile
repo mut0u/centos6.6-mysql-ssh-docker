@@ -10,22 +10,14 @@ RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-6 \
 RUN rpm --rebuilddb \
 	&& yum -y install \
 	https://centos6.iuscommunity.org/ius-release.rpm \
-	vim-minimal-7.4.629-5.el6 \
-	sudo-1.8.6p3-20.el6_7 \
-	openssh-5.3p1-112.el6_7 \
-	openssh-server-5.3p1-112.el6_7 \
-	openssh-clients-5.3p1-112.el6_7 \
-	python-setuptools-0.6.10-3.el6 \
 	vim-minimal \
 	sudo \
 	openssh \
 	openssh-server \
 	openssh-clients \
 	python-setuptools \
-	wget
-
-
-RUN rm -rf /var/cache/yum/* && yum clean all
+	wget \
+        && rm -rf /var/cache/yum/* && yum clean all
 
 
 
