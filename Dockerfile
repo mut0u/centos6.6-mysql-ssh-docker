@@ -16,10 +16,7 @@ RUN rpm --rebuilddb \
 	openssh-server \
 	openssh-clients \
 	python-setuptools \
-	wget \
-        && rm -rf /var/cache/yum/* && yum clean all
-
-
+	wget
 
 
 RUN wget http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
@@ -30,7 +27,6 @@ RUN rpm -ivh mysql57-community-release-el6-7.noarch.rpm
 
 
 
-RUN yum -y install mysql-community-server.x86_64
 
 
 
@@ -40,16 +36,11 @@ RUN easy_install 'supervisor == 3.2.0' 'supervisor-stdout == 0.1.1' \
 
 
 
-
-
 RUN sed -i \
 	-e 's~^PasswordAuthentication yes~PasswordAuthentication no~g' \
 	-e 's~^#PermitRootLogin yes~PermitRootLogin no~g' \
 	-e 's~^#UseDNS yes~UseDNS no~g' \
 	/etc/ssh/sshd_config
-
-
-
 
 
 
@@ -73,13 +64,6 @@ RUN chmod 600 /etc/services-config/ssh/sshd_config \
 
 
 
-
-
-
-
-
-
-
 ENV SSH_AUTHORIZED_KEYS ""
 ENV SSH_SUDO "ALL=(ALL) ALL"
 ENV SSH_USER_PASSWORD ""
@@ -89,11 +73,8 @@ ENV SSH_USER_SHELL "/bin/bash"
 
 
 
-
-EXPOSE 22
-EXPOSE 3306
-
-
-
+EXPOSE [22, 3306]
 
 CMD ["/usr/bin/supervisord", "--configuration=/etc/supervisord.conf"]
+
+RUN yum -y install mysql-community-server.x86_64 && rm -rf /var/cache/yum/* && yum clean all
